@@ -1,33 +1,23 @@
 name: Rust CI
 
-on:
-  push:
-      branches:
-            - main
-              pull_request:
-                  branches:
-                        - main
+on: [push, pull_request]
 
-                        env:
-                          CARGO_TERM_COLOR: always
+jobs:
+  build:
+      runs-on: ubuntu-latest
+          steps:
+                - uses: actions/checkout@v3
+                      
+                            - name: Install Rust
+                                    uses: actions-rs/toolchain@v1
+                                            with:
+                                                      toolchain: stable
+                                                                target: wasm32-unknown-unknown
+                                                                          override: true
 
-                          jobs:
-                            build_and_test:
-                                name: Soroban Build & Test
-                                    runs-on: ubuntu-latest
-                                        steps:
-                                              - uses: actions/checkout@v3
+                                                                                - name: Install Soroban
+                                                                                        run: cargo install --locked soroban-cli --version 20.0.0
 
-                                                    - name: Install Rust Toolchain
-                                                            uses: actions-rs/toolchain@v1
-                                                                    with:
-                                                                              toolchain: stable
-                                                                                        target: wasm32-unknown-unknown
-                                                                                                  override: true
-
-                                                                                                        - name: Install Soroban CLI
-                                                                                                                run: cargo install --locked soroban-cli --version 20.0.0
-
-                                                                                                                      - name: Run Build & Test
-                                                                                                                              run: make all
-                                                                                                                              
+                                                                                              - name: Build and Test
+                                                                                                      run: make all
+                                                                                                      
