@@ -1,11 +1,16 @@
 [workspace]
+resolver = "2"
 members = [
-        "contracts/invoice_nft",
-            "contracts/lending_pool",
+    "contracts/invoice_nft",
+    "contracts/lending_pool"
 ]
 
 [profile.release]
 opt-level = "z"
-lto = true
-codegen-units = 1
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
 panic = "abort"
+codegen-units = 1
+lto = true
