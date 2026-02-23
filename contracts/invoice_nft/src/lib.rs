@@ -99,11 +99,21 @@ impl InvoiceContract {
 
         current_id
     }
+    pub fn get_invoice(env: Env, id: u64) -> Invoice {
+        env.storage().instance()
+            .get(&DataKey::Invoice(id))
+            .unwrap_or_else(|| panic!("InvoiceNotFound"))
+    }
 
     // 2. GET: Read invoice details
-    pub fn get_invoice(env: Env, id: u64) -> Option<Invoice> {
-        env.storage().instance().get(&DataKey::Invoice(id))
-    }
+    /// Get invoice details by ID (read-only view function)
+/// 
+/// Panics with "InvoiceNotFound" if the ID does not exist
+    pub fn get_invoice(env: Env, id: u64) -> Invoice {
+        env.storage().instance()
+        .get(&DataKey::Invoice(id))
+        .unwrap_or_else(|| panic!("InvoiceNotFound"))
+}
 
     // 3. REPAY: Mark the invoice as paid
     pub fn repay(env: Env, id: u64) {
