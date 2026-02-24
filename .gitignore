@@ -16,15 +16,4 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
 
-# OS
-Thumbs.db
-
-# Logs
-logs
-*.log

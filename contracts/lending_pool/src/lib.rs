@@ -1,5 +1,5 @@
 #![no_std]
-use soroban_sdk::{contract, contractimpl, contracttype, token, Address, BytesN, Env, Symbol};
+use soroban_sdk::{contract, contractimpl, contracttype, token, Address, Env, BytesN, symbol_short};
 
 mod tests;
 
@@ -78,10 +78,7 @@ impl LendingPool {
     pub fn set_paused(env: Env, paused: bool) {
         Self::require_admin(&env);
         env.storage().instance().set(&DataKey::Paused, &paused);
-        env.events().publish(
-            (Symbol::new(&env, "pause_set"), paused),
-            env.ledger().sequence(),
-        );
+        env.events().publish((symbol_short!("pause_set"), paused), env.ledger().sequence());
     }
 
     // GET PAUSE STATE: Check if contract is paused
@@ -108,8 +105,7 @@ impl LendingPool {
         client.transfer(&from, &env.current_contract_address(), &amount);
 
         // (In a real app, we would mint "Pool Share Tokens" here)
-        env.events()
-            .publish((Symbol::new(&env, "deposit"), from), amount);
+        env.events().publish((symbol_short!("deposit"), from), amount);
     }
 
     // 3. BORROW: Borrow against an invoice (Simplified)
@@ -133,8 +129,7 @@ impl LendingPool {
         // 2. Transfer funds Contract -> Borrower
         client.transfer(&env.current_contract_address(), &borrower, &amount);
 
-        env.events()
-            .publish((Symbol::new(&env, "borrow"), borrower), amount);
+        env.events().publish((symbol_short!("borrow"), borrower), amount);
     }
 
     // Helper function to calculate interest (5% APY)
@@ -204,8 +199,7 @@ impl LendingPool {
         env.storage().instance().set(&DataKey::LoanId, &loan_id);
         Self::extend_storage_ttl(&env);
 
-        env.events()
-            .publish((Symbol::new(&env, "loan_created"), borrower), loan_id);
+        env.events().publish((symbol_short!("loan_create"), borrower), loan_id);
         loan_id
     }
 
@@ -261,8 +255,7 @@ impl LendingPool {
 
         // In a real implementation, we would transfer the NFT back to the borrower
         // For now, we just emit an event
-        env.events()
-            .publish((Symbol::new(&env, "loan_repaid"), loan.borrower), loan_id);
+        env.events().publish((symbol_short!("loan_repaid"), loan.borrower), loan_id);
     }
 
     // LIQUIDATE: Liquidate a defaulted loan
@@ -311,8 +304,7 @@ impl LendingPool {
         Self::extend_storage_ttl(&env);
 
         // In a real implementation, we would transfer the NFT to the liquidator
-        env.events()
-            .publish((Symbol::new(&env, "loan_liquidated"), liquidator), loan_id);
+        env.events().publish((symbol_short!("loan_liquid"), liquidator), loan_id);
     }
 
     // GET LOAN: Retrieve loan details
