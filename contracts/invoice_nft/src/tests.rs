@@ -1,5 +1,5 @@
-use soroban_sdk::contracterror;
 use crate::InvoiceContract;
+use soroban_sdk::contracterror;
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -15,8 +15,8 @@ pub enum Error {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::{testutils::Address as TestAddress, testutils::Bytes as TestBytes, Bytes};
     use soroban_sdk::contractclient::InvoiceContractClient;
+    use soroban_sdk::{testutils::Address as TestAddress, testutils::Bytes as TestBytes, Bytes};
 
     #[test]
     fn test_mint_invoice_success() {
@@ -30,7 +30,7 @@ mod tests {
 
         // Create a valid signature (mock)
         let signature = [2u8; 64];
-        
+
         let due_date = env.ledger().timestamp() + 86400; // Tomorrow
         let invoice_id = client.mint(&owner, &1000, &due_date, &750, &signature);
 

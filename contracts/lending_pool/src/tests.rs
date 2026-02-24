@@ -1,5 +1,5 @@
-use soroban_sdk::contracterror;
 use crate::LendingPool;
+use soroban_sdk::contracterror;
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -19,8 +19,8 @@ pub enum Error {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use soroban_sdk::{testutils::Address as TestAddress, testutils::Bytes as TestBytes};
     use soroban_sdk::contractclient::LendingPoolClient;
+    use soroban_sdk::{testutils::Address as TestAddress, testutils::Bytes as TestBytes};
 
     #[test]
     fn test_initialization() {
