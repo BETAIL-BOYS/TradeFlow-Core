@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "contracts/invoice_nft",
     "contracts/lending_pool",
+    "contracts/liquidity_vault",
     "contracts/tradeflow",
     "contracts/amm_pool",
     "contracts/amm_factory"
