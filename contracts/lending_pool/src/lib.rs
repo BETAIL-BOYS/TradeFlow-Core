@@ -4,10 +4,10 @@ use soroban_sdk::{contract, contracterror, contractimpl, contracttype, token, Ad
 pub mod flash_loan_receiver;
 pub use flash_loan_receiver::FlashLoanReceiver;
 
-/// Flash loan fee in basis points (8 bps = 0.08%)
+/// Flash loan fee in basis points (5 bps = 0.05%)
 /// This fee compensates Liquidity Providers for temporary risk exposure
 /// while generating additional protocol revenue.
-const FLASH_LOAN_FEE_BPS: i128 = 8;
+const FLASH_LOAN_FEE_BPS: i128 = 5;
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -431,7 +431,7 @@ impl LendingPool {
         if amount < 0 {
             panic_with_error!(&env, Error::MathOverflow);
         }
-        // amount * 8 / 10000
+        // amount * 5 / 10000
         amount
             .checked_mul(FLASH_LOAN_FEE_BPS)
             .and_then(|v| v.checked_div(10_000))
@@ -442,7 +442,7 @@ impl LendingPool {
     /// `amount + calculate_flash_fee(amount)` to be returned before callback returns.
     /// 
     /// # Flash Loan Fee & LP Share Value
-    /// A fee of 0.08% (8 bps) is charged. Fees stay in pool reserves, increasing LP share value.
+    /// A fee of 0.05% (5 bps) is charged. Fees stay in pool reserves, increasing LP share value.
     /// 
     /// # Callback Interface
     /// Receiver must implement [`FlashLoanReceiver`] trait:

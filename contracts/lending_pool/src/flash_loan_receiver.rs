@@ -15,7 +15,7 @@ pub trait FlashLoanReceiver {
     /// # Arguments
     /// * `env` - Soroban environment
     /// * `amount` - Borrowed amount (must repay fully)
-    /// * `fee` - Flash loan fee (0.08% = 8 bps)
+    /// * `fee` - Flash loan fee (0.05% = 5 bps)
     /// * `params` - Caller-provided params (user data)
     ///
     /// # Panics

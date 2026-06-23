@@ -254,21 +254,21 @@ use crate::mock_flash_receiver::MockFlashReceiverClient;
         let contract_id = env.register(crate::LendingPool, ());
         let client = LendingPoolClient::new(&env, &contract_id);
 
-        // 10000 * 8 / 10000 = 8
-        assert_eq!(client.calculate_flash_fee(&10000), 8);
+        // 10000 * 5 / 10000 = 5
+        assert_eq!(client.calculate_flash_fee(&10000), 5);
         
-        // 5000 * 8 / 10000 = 4
-        assert_eq!(client.calculate_flash_fee(&5000), 4);
+        // 5000 * 5 / 10000 = 2
+        assert_eq!(client.calculate_flash_fee(&5000), 2);
         
         // Zero amount
         assert_eq!(client.calculate_flash_fee(&0), 0);
         
-        // Large amount: 1_000_000 * 8 / 10000 = 800
-        assert_eq!(client.calculate_flash_fee(&1_000_000), 800);
+        // Large amount: 1_000_000 * 5 / 10000 = 500
+        assert_eq!(client.calculate_flash_fee(&1_000_000), 500);
         
         // Max limit consideration: using i128, large amounts won't overflow
         let large_amount: i128 = 1_000_000_000_000_000;
-        assert_eq!(client.calculate_flash_fee(&large_amount), 800_000_000_000);
+        assert_eq!(client.calculate_flash_fee(&large_amount), 500_000_000_000);
     }
 
     #[test]
