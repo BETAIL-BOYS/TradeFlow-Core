@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
-    "start": "node init && node server.js",
+    "start": "node server.js",
     "seed": "node scripts/seed.js"
   },
   "keywords": [],
